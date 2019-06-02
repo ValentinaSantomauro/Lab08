@@ -7,16 +7,18 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import it.polito.tdp.dizionariograph.model.Parola;
+
 public class WordDAO {
 
 	/*
 	 * Ritorna tutte le parole di una data lunghezza
 	 */
-	public List<String> getAllWordsFixedLength(int length) {
+	public List<Parola> getAllWordsFixedLength(int length) {
 
-		String sql = "SELECT nome FROM parola WHERE LENGTH(nome) = ?;";
-		List<String> parole = new ArrayList<String>();
-
+		String sql = "SELECT nome FROM parola WHERE LENGTH(nome) = ? ";
+		List<Parola> parole = new ArrayList<Parola>();
+ 
 		try {
 			Connection conn = ConnectDB.getConnection();
 			PreparedStatement st = conn.prepareStatement(sql);
@@ -24,7 +26,7 @@ public class WordDAO {
 			ResultSet res = st.executeQuery();
 
 			while (res.next()) {
-				parole.add(res.getString("nome"));
+				parole.add(new Parola(res.getString("nome")));
 			}
 
 			return parole;
